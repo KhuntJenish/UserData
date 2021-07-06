@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    final HomeController homeController = Get.find<HomeController>();
+    final UsersController homeController = Get.find<UsersController>();
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
@@ -54,9 +54,9 @@ class HomePage extends StatelessWidget {
                     } else {
                       return ListView.builder(
                         controller: homeController.scrollController,
-                        itemCount: homeController.userList.length + 1,
+                        itemCount: homeController.usersList.length + 1,
                         itemBuilder: (context, index) {
-                          if (index == homeController.userList.length) {
+                          if (index == homeController.usersList.length) {
                             return circlularProgressIndicator();
                           } else {
                             return Padding(
@@ -66,11 +66,16 @@ class HomePage extends StatelessWidget {
                               ),
                               child: InkWell(
                                 onTap: () {
-                                  Get.to(
-                                    UserPage(),
-                                    transition: Transition.zoom,
-                                    arguments: homeController.userList[index],
+                                  Get.toNamed(
+                                    '/User',
+                                    //  transition: Transition.zoom,
+                                    arguments: homeController.usersList[index],
                                   );
+                                  // (
+                                  //   "/User",
+                                  //   transition: Transition.zoom,
+                                  //   arguments: homeController.usersList[index],
+                                  // );
                                 },
                                 child: Card(
                                   child: ListTile(
@@ -79,12 +84,12 @@ class HomePage extends StatelessWidget {
                                       backgroundImage: NetworkImage(homeController
                                               .isSearching
                                           ? '${homeController.searchList[index].avatarUrl}'
-                                          : '${homeController.userList[index].avatarUrl}'),
+                                          : '${homeController.usersList[index].avatarUrl}'),
                                     ),
                                     title: Text(
                                       homeController.isSearching
                                           ? '${homeController.searchList[index].login}'
-                                          : '${homeController.userList[index].login}',
+                                          : '${homeController.usersList[index].login}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -92,7 +97,7 @@ class HomePage extends StatelessWidget {
                                     subtitle: Text(
                                       homeController.isSearching
                                           ? 'ID : ${homeController.searchList[index].id}'
-                                          : 'ID : ${homeController.userList[index].id}',
+                                          : 'ID : ${homeController.usersList[index].id}',
                                       // style: TextStyle(color: Colors.white),
                                     ),
                                     trailing: Icon(Icons.star),

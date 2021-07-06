@@ -1,24 +1,24 @@
 import 'dart:convert';
 
-List<UserModel> userModelFromJson(String str) =>
-    List<UserModel>.from(json.decode(str).map((x) => UserModel.fromJson(x)));
+List<UsersModel> userModelFromJson(String str) =>
+    List<UsersModel>.from(json.decode(str).map((x) => UsersModel.fromJson(x)));
 
-String userModelToJson(List<UserModel> data) =>
+String userModelToJson(List<UsersModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class UserModel {
-  UserModel({
+class UsersModel {
+  UsersModel({
     this.login,
     this.id,
     this.avatarUrl,
     this.type,
-    this.followers,
+    this.url,
     this.following,
   });
 
   String login;
   int id;
-  int followers;
+  String url;
   int following;
   String avatarUrl;
   String type;
@@ -31,18 +31,18 @@ class UserModel {
   //       following: json["following"]
   //     );
 
-  UserModel.fromJson(Map<String, dynamic> jsonData) {
+  UsersModel.fromJson(Map<String, dynamic> jsonData) {
     login = jsonData["login"];
     id = jsonData["id"];
     avatarUrl = jsonData["avatar_url"];
-    followers = jsonData["followers"];
+    url = jsonData["url"];
     following = jsonData["following"];
   }
   Map<String, dynamic> toJson() => {
         "login": login,
         "id": id,
         "avatar_url": avatarUrl,
-        "followers": followers,
+        "url": url,
         "following": following,
       };
 }

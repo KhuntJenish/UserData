@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:github_user/screen/userpage/usercontroller.dart';
 
 class UserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final UserController userController = Get.find<UserController>();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -61,11 +63,11 @@ class UserPage extends StatelessWidget {
                       style: TextStyle(color: Colors.black),
                     ),
                     Text(
-                      '${Get.arguments.following}',
+                      '${userController.user.followers}',
                       style: TextStyle(color: Colors.grey),
                     ),
                     Text(
-                      '${Get.arguments.followers}',
+                      '${userController.user.following}',
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],

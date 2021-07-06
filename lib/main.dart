@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:github_user/screen/homepage/homebinding.dart';
 import 'package:github_user/screen/homepage/homepage.dart';
+import 'package:github_user/screen/userpage/userbinding.dart';
+import 'package:github_user/screen/userpage/userpage.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/Home",
       getPages: [
         GetPage(name: "/Home", page: () => HomePage(), binding: HomeBinding()),
+        GetPage(name: "/User", page: () => UserPage(), binding: UserBinding()),
         // GetPage(name: "/Profile", page: () => ProfilePage()),
       ],
     );

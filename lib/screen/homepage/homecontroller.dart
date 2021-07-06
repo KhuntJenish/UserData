@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_user/model/model.dart';
+import 'package:github_user/model/users_model.dart';
 import 'package:github_user/network/network.dart';
 
-class HomeController extends GetxController {
+class UsersController extends GetxController {
   var isLoading = false.obs;
   var isSearching = false;
-  var userList = List<UserModel>().obs;
-  var searchList = List<UserModel>().obs;
+  var usersList = List<UsersModel>().obs;
+  var searchList = List<UsersModel>().obs;
   var searchText = '';
   String page = '0';
   ScrollController scrollController = ScrollController();
@@ -23,10 +23,10 @@ class HomeController extends GetxController {
   Future<void> fetchUsers() async {
     try {
       isLoading(true);
-      var users = await UserProvider().getUser(page);
+      var users = await UserProvider().getUsers(page);
       // var users = await ApiService.fetchUser();
       if (users != null) {
-        userList.addAll(users);
+        usersList.addAll(users);
       }
     } finally {
       isLoading(false);
@@ -38,8 +38,8 @@ class HomeController extends GetxController {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         print("reached end");
-        page = (userList.length > 0)
-            ? userList[userList.length - 1].id.toString()
+        page = (usersList.length > 0)
+            ? usersList[usersList.length - 1].id.toString()
             : 0.toString();
         getMoreData(page);
       }
@@ -49,10 +49,10 @@ class HomeController extends GetxController {
   Future<void> getMoreData(String page) async {
     try {
       // isLoading(true);
-      var users = await UserProvider().getUser(page);
+      var users = await UserProvider().getUsers(page);
       // var users = await ApiService.fetchUser();
       if (users != null) {
-        userList.addAll(users);
+        usersList.addAll(users);
       }
     } finally {
       isLoading(false);
@@ -75,15 +75,15 @@ class HomeController extends GetxController {
     );
   }
 
-  List<UserModel> _buildSearchList() {
+  List<UsersModel> _buildSearchList() {
     if (searchText.isEmpty) {
-      return userList.toList();
+      return usersList.toList();
     } else {
       // searchList = [];
-      for (int i = 0; i < userList.length; i++) {
-        String name = userList[i].login;
+      for (int i = 0; i < usersList.length; i++) {
+        String name = usersList[i].login;
         if (name.toLowerCase().contains(searchText.toLowerCase())) {
-          searchList.add(userList[i]);
+          searchList.add(usersList[i]);
         }
       }
       return searchList.toList();
